@@ -5,18 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Katalog Regular</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    /* Style untuk zoom */
-    .zoom-image {
-      transition: transform 0.3s ease;
-      cursor: pointer;
-    }
-
-    .zoomed {
-      transform: scale(2);
-      z-index: 999;
-    }
-  </style>
 </head>
 <body class="bg-yellow-50 text-gray-800 font-sans">
   <div class="max-w-4xl mx-auto py-10 px-6">
@@ -24,36 +12,52 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Produk 1 -->
       <div class="bg-white rounded-xl shadow p-4">
-        <img src="https://worrylesshomebaker.github.io/katalogproduk/regular/kuecoklat/kue_coklat1.jpeg" alt="Kacang" class="rounded mb-4 zoom-image" onclick="zoomImage(this)">
-        <img src="https://worrylesshomebaker.github.io/katalogproduk/regular/kuecoklat/kue_coklat1.jpeg" alt="Kacang" class="rounded mb-4 zoom-image" onclick="zoomImage(this)">
-        <img src="https://worrylesshomebaker.github.io/katalogproduk/regular/kuecoklat/kue_coklat1.jpeg" alt="Kacang" class="rounded mb-4 zoom-image" onclick="zoomImage(this)">
-        <h2 class="text-xl font-semibold">Kue kacang coklat</h2>
-        <p class="text-sm text-gray-600">Lapisan luar adalah kue kacang dan dalamnya coklat.1 Box isi 8 pcs</p>
+        <div class="flex gap-2">
+          <img src="https://worrylesshomebaker.github.io/katalogproduk/regular/kuecoklat/kue_coklat1.jpeg" alt="Kacang" class="w-24 h-24 object-cover rounded cursor-pointer" onclick="openModal(this.src)">
+          <img src="https://worrylesshomebaker.github.io/katalogproduk/regular/kuecoklat/kue_coklat2.jpeg" alt="Kacang" class="w-24 h-24 object-cover rounded cursor-pointer" onclick="openModal(this.src)">
+          <img src="https://worrylesshomebaker.github.io/katalogproduk/regular/kuecoklat/kue_coklat3.jpeg" alt="Kacang" class="w-24 h-24 object-cover rounded cursor-pointer" onclick="openModal(this.src)">
+        </div>
+        <h2 class="text-xl font-semibold mt-4">Kue kacang coklat</h2>
+        <p class="text-sm text-gray-600">Lapisan luar adalah kue kacang dan dalamnya coklat. 1 Box isi 8 pcs</p>
         <p class="font-bold mt-2">Rp 35.000</p>
       </div>
+
       <!-- Produk 2 -->
       <div class="bg-white rounded-xl shadow p-4">
-        <img src="https://via.placeholder.com/300x200?text=Kastengel" alt="Kastengel" class="rounded mb-4 zoom-image" onclick="zoomImage(this)">
-        <h2 class="text-xl font-semibold">Kastengel</h2>
+        <div class="flex gap-2">
+          <img src="https://via.placeholder.com/100x100?text=Kastengel1" alt="Kastengel" class="w-24 h-24 object-cover rounded cursor-pointer" onclick="openModal(this.src)">
+          <img src="https://via.placeholder.com/100x100?text=Kastengel2" alt="Kastengel" class="w-24 h-24 object-cover rounded cursor-pointer" onclick="openModal(this.src)">
+          <img src="https://via.placeholder.com/100x100?text=Kastengel3" alt="Kastengel" class="w-24 h-24 object-cover rounded cursor-pointer" onclick="openModal(this.src)">
+        </div>
+        <h2 class="text-xl font-semibold mt-4">Kastengel</h2>
         <p class="text-sm text-gray-600">Rasa keju gurih renyah</p>
         <p class="font-bold mt-2">Rp 65.000</p>
       </div>
     </div>
+
     <div class="mt-10 text-center">
       <a href="index.html" class="text-yellow-600 hover:underline">Kembali ke Beranda</a>
     </div>
   </div>
 
+  <!-- Modal Zoom -->
+  <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50">
+    <div class="relative">
+      <button onclick="closeModal()" class="absolute top-0 right-0 mt-2 mr-2 text-white text-2xl font-bold">&times;</button>
+      <img id="modalImage" src="" alt="Zoom" class="max-w-full max-h-[80vh] rounded-lg shadow-lg">
+    </div>
+  </div>
+
   <script>
-    // Fungsi untuk zoom gambar
-    function zoomImage(img) {
-      // Cek jika gambar sudah dalam keadaan zoom
-      if (img.classList.contains('zoomed')) {
-        img.classList.remove('zoomed');
-      } else {
-        // Zoom gambar yang diklik
-        img.classList.add('zoomed');
-      }
+    function openModal(src) {
+      document.getElementById('modalImage').src = src;
+      document.getElementById('imageModal').classList.remove('hidden');
+      document.getElementById('imageModal').classList.add('flex');
+    }
+
+    function closeModal() {
+      document.getElementById('imageModal').classList.add('hidden');
+      document.getElementById('imageModal').classList.remove('flex');
     }
   </script>
 </body>
