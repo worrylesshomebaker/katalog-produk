@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Katalog Regular</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* Style untuk zoom */
+    .zoom-image {
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .zoomed {
+      transform: scale(2);
+      z-index: 999;
+    }
+  </style>
 </head>
 <body class="bg-yellow-50 text-gray-800 font-sans">
   <div class="max-w-4xl mx-auto py-10 px-6">
@@ -12,14 +24,16 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Produk 1 -->
       <div class="bg-white rounded-xl shadow p-4">
-        <img src="https://via.placeholder.com/300x200?text=Nastar" alt="Nastar" class="rounded mb-4">
-        <h2 class="text-xl font-semibold">Nastar</h2>
-        <p class="text-sm text-gray-600">Isi nanas, manis dan lembut</p>
-        <p class="font-bold mt-2">Rp 60.000</p>
+        <img src="https://via.placeholder.com/300x200?text=Nastar" alt="Nastar" class="rounded mb-4 zoom-image" onclick="zoomImage(this)">
+        <img src="https://via.placeholder.com/300x200?text=Nastar" alt="Nastar" class="rounded mb-4 zoom-image" onclick="zoomImage(this)">
+        <img src="https://via.placeholder.com/300x200?text=Nastar" alt="Nastar" class="rounded mb-4 zoom-image" onclick="zoomImage(this)">
+        <h2 class="text-xl font-semibold">Kue kacang coklat</h2>
+        <p class="text-sm text-gray-600">Lapisan luar adalah kue kacang dan dalamnya coklat.1 Box isi 8 pcs</p>
+        <p class="font-bold mt-2">Rp 35.000</p>
       </div>
       <!-- Produk 2 -->
       <div class="bg-white rounded-xl shadow p-4">
-        <img src="https://via.placeholder.com/300x200?text=Kastengel" alt="Kastengel" class="rounded mb-4">
+        <img src="https://via.placeholder.com/300x200?text=Kastengel" alt="Kastengel" class="rounded mb-4 zoom-image" onclick="zoomImage(this)">
         <h2 class="text-xl font-semibold">Kastengel</h2>
         <p class="text-sm text-gray-600">Rasa keju gurih renyah</p>
         <p class="font-bold mt-2">Rp 65.000</p>
@@ -29,5 +43,18 @@
       <a href="index.html" class="text-yellow-600 hover:underline">Kembali ke Beranda</a>
     </div>
   </div>
+
+  <script>
+    // Fungsi untuk zoom gambar
+    function zoomImage(img) {
+      // Cek jika gambar sudah dalam keadaan zoom
+      if (img.classList.contains('zoomed')) {
+        img.classList.remove('zoomed');
+      } else {
+        // Zoom gambar yang diklik
+        img.classList.add('zoomed');
+      }
+    }
+  </script>
 </body>
 </html>
