@@ -41,12 +41,10 @@
   </div>
 
   <!-- Modal Zoom -->
-  <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50" onclick="closeModalOutside(event)">
+  <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50 cursor-pointer" onclick="closeModalOutside(event)">
     <div class="relative" id="modalContent">
-      <!-- Tombol close -->
       <button onclick="closeModal()" class="absolute top-2 right-2 text-white text-3xl font-bold hover:text-red-400">&times;</button>
-      <!-- <img id="modalImage" src="" alt="Zoom" class="max-w-full max-h-[80vh] rounded-lg shadow-lg"> -->
-      <img id="modalImage" src="" alt="Zoom" class="max-w-[50vw] max-h-[50vh] object-contain rounded-lg shadow-lg">
+      <img id="modalImage" src="" alt="Zoom" class="mx-auto max-w-sm max-h-[60vh] object-contain rounded-lg shadow-lg">
     </div>
   </div>
 
