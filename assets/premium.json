@@ -5,8 +5,8 @@
       "description": "Rasakan perpaduan hangatnya rempah asli kunyit dan segarnya asam Jawa pilihan dalam satu botol. Dibuat dari bahan alami tanpa pengawet, minuman ini bukan hanya menyegarkan, tapi juga baik untuk menjaga stamina dan membantu tubuh tetap bugar.\nDengan cita rasa manis-asam yang pas, Kunyit Asem dari Worry Less siap menemani hari Anda — bikin rileks, segar, dan sehat setiap tegukan.",
       "price": "Rp 7.000/botol",
       "images": [
-        "https://worrylesshomebaker.github.io/katalogproduk/assets/images/picpremium/picminuman/kunyit_asem1.jpeg",
-        "https://worrylesshomebaker.github.io/katalogproduk/assets/images/picpremium/picminuman/kunyit_asem2.jpeg"
+        "https://worrylesshomebaker.github.io/katalog-produk/assets/images/picpremium/picminuman/kunyit_asem1.jpeg",
+        "https://worrylesshomebaker.github.io/katalog-produk/assets/images/picpremium/picminuman/kunyit_asem2.jpeg"
       ],
       "whatsapp": "https://wa.me/6281299884771?text=Halo%20WorryLess%2C%20saya%20mau%20pesan%20Kunyit%20Asem",
       "status": "available"
@@ -16,10 +16,22 @@
       "description": "Nikmati sensasi kopi susu yang lembut dan kaya rasa dengan sentuhan manis alami dari gula aren pilihan. Kopi Susu Gula Aren dari Worry Less dibuat dari biji kopi berkualitas tinggi yang dipadukan dengan susu segar dan gula aren asli, menciptakan harmoni rasa yang sempurna di setiap tegukan.\nCocok untuk menemani pagi Anda atau sebagai penyemangat di siang hari, minuman ini tidak hanya memanjakan lidah tapi juga memberikan energi alami tanpa tambahan bahan pengawet.",
       "price": "Rp 15.000/botol",
       "images": [
-        "https://worrylesshomebaker.github.io/katalogproduk/assets/images/picpremium/picminuman/kopi_susu1.jpeg"
+        "https://worrylesshomebaker.github.io/katalog-produk/assets/images/picpremium/picminuman/kopi_susu_gula_aren1.jpeg",
+        "https://worrylesshomebaker.github.io/katalog-produk/assets/images/picpremium/picminuman/kopi_susu_gula_aren2.jpeg"
       ],
-      "whatsapp": "https://wa.me/6281299884771?text=Halo%20WorryLess%2C%20saya%20mau%20pesan%20Kunyit%20Asem",
-      "status": "TBD"
+      "whatsapp": "https://wa.me/6281299884771?text=Halo%20worrylesshomebaker%2C%20saya%20mau%20pesan%20Kopi%20Susu%20Gula%20Aren",
+      "status": "available"
+    },
+    {
+      "name": "Americano – Klasik & Bisa Ditambah Stevia",
+      "description": "Rasakan Americano klasik tanpa gula, pahit dan murni seperti seharusnya. Setiap pesanan dilengkapi dengan sachet stevia, sehingga kamu bisa menyesuaikan tingkat manis sesuai selera. Nikmati kopi sehat, fleksibel, dan tetap nikmat di setiap tegukan.",
+      "price": "Rp 10.000/botol",
+      "images": [
+        "https://worrylesshomebaker.github.io/katalog-produk/assets/images/picpremium/picminuman/americano1.jpeg",
+        "https://worrylesshomebaker.github.io/katalog-produk/assets/images/picpremium/picminuman/americano2.jpeg"
+      ],
+      "whatsapp": "https://wa.me/6281299884771?text=Halo%20worrylesshomebaker%2C%20saya%20mau%20pesan%20Kopi%20Susu%20Gula%20Aren",
+      "status": "available"
     }
   ],
   "Kue Kering": [
@@ -30,7 +42,7 @@
       "images": [
         "https://worrylesshomebaker.github.io/katalog-produk/assets/images/comingsoon.jpg"
       ],
-      "whatsapp": "https://wa.me/6281299884771?text=Halo%20WorryLess%2C%20saya%20mau%20pesan%20Choco%20Chip%20Cookies",
+      "whatsapp": "https://wa.me/6281299884771?text=Halo%20worrylesshomebaker%2C%20saya%20mau%20pesan%20Choco%20Chip%20Cookies",
       "status": "TBD"
     }
   ],
@@ -42,7 +54,7 @@
       "images": [
         "https://worrylesshomebaker.github.io/katalog-produk/assets/images/comingsoon.jpg"
       ],
-      "whatsapp": "https://wa.me/6281299884771?text=Halo%20WorryLess%2C%20saya%20mau%20pesan%20Brownies%20Premium",
+      "whatsapp": "https://wa.me/6281299884771?text=Halo%20worrylesshomebaker%2C%20saya%20mau%20pesan%20Brownies%20Premium",
       "status": "TBD"
     }
   ]
