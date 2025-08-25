@@ -8,7 +8,18 @@
         "https://worrylesshomebaker.github.io/katalogproduk/assets/images/picpremium/picminuman/kunyit_asem1.jpeg",
         "https://worrylesshomebaker.github.io/katalogproduk/assets/images/picpremium/picminuman/kunyit_asem2.jpeg"
       ],
-      "whatsapp": "https://wa.me/6281299883771?text=Halo%20WorryLess%2C%20saya%20mau%20pesan%20Kunyit%20Asem"
+      "whatsapp": "https://wa.me/6281299884771?text=Halo%20WorryLess%2C%20saya%20mau%20pesan%20Kunyit%20Asem",
+      "status": "available"
+    },
+    {
+      "name": "Kopi Susu Gula Aren – Nikmat, Kaya Rasa, dan Alami",
+      "description": "Nikmati sensasi kopi susu yang lembut dan kaya rasa dengan sentuhan manis alami dari gula aren pilihan. Kopi Susu Gula Aren dari Worry Less dibuat dari biji kopi berkualitas tinggi yang dipadukan dengan susu segar dan gula aren asli, menciptakan harmoni rasa yang sempurna di setiap tegukan.\nCocok untuk menemani pagi Anda atau sebagai penyemangat di siang hari, minuman ini tidak hanya memanjakan lidah tapi juga memberikan energi alami tanpa tambahan bahan pengawet.",
+      "price": "Rp 15.000/botol",
+      "images": [
+        "https://worrylesshomebaker.github.io/katalogproduk/assets/images/picpremium/picminuman/kopi_susu1.jpeg"
+      ],
+      "whatsapp": "https://wa.me/6281299884771?text=Halo%20WorryLess%2C%20saya%20mau%20pesan%20Kunyit%20Asem",
+      "status": "TBD"
     }
   ],
   "Kue Kering": [
@@ -19,7 +30,8 @@
       "images": [
         "https://worrylesshomebaker.github.io/katalogproduk/assets/images/comingsoon.jpg"
       ],
-      "whatsapp": "https://wa.me/6281299883771?text=Halo%20WorryLess%2C%20saya%20mau%20pesan%20Choco%20Chip%20Cookies"
+      "whatsapp": "https://wa.me/6281299884771?text=Halo%20WorryLess%2C%20saya%20mau%20pesan%20Choco%20Chip%20Cookies",
+      "status": "TBD"
     }
   ],
   "Brownies": [
@@ -30,7 +42,8 @@
       "images": [
         "https://worrylesshomebaker.github.io/katalogproduk/assets/images/comingsoon.jpg"
       ],
-      "whatsapp": "https://wa.me/6281299883771?text=Halo%20WorryLess%2C%20saya%20mau%20pesan%20Brownies%20Premium"
+      "whatsapp": "https://wa.me/6281299884771?text=Halo%20WorryLess%2C%20saya%20mau%20pesan%20Brownies%20Premium",
+      "status": "TBD"
     }
   ]
 }

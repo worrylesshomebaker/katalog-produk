@@ -7,39 +7,158 @@
   <link rel="icon" href="https://worrylesshomebaker.github.io/katalogproduk/assets/logo/icon.png" type="image/png" />
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-green-50 text-gray-800 font-sans">
-  <!-- Back Button -->
-  <a href="../" class="fixed top-4 left-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg z-50 transition duration-300">
+<body class="bg-pink-50 text-gray-800 font-sans">
+
+  <!-- Back button -->
+  <a href="../" class="fixed top-4 left-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg z-50 transition duration-300">
     ⬅ Back
   </a>
 
-  <div class="max-w-4xl mx-auto pt-32 md:pt-10 px-6">
-    <h1 class="text-3xl font-bold mb-6 text-center">Katalog Premium</h1>
-    
-    <!-- Container for JSON buttons -->
-    <div id="premiumMenu" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+  <div class="max-w-5xl mx-auto pt-32 md:pt-10 px-6">
+    <h1 class="text-3xl font-bold mb-6">Katalog Premium</h1>
 
-    <!-- Back to Home -->
+    <!-- Submenu kategori -->
+    <div id="category-menu" class="flex flex-wrap gap-3 mb-8"></div>
+
+    <!-- Container produk -->
+    <div id="product-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+
     <div class="mt-10 text-center">
-      <a href="../" class="text-green-600 hover:underline">Kembali ke Beranda</a>
+      <a href="../" class="text-pink-600 hover:underline">Kembali ke Beranda</a>
+    </div>
+  </div>
+
+  <!-- Modal Zoom -->
+  <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50 cursor-pointer" onclick="closeModalOutside(event)">
+    <div class="relative" id="modalContent">
+      <button onclick="closeModal()" class="absolute top-2 right-2 text-white text-3xl font-bold hover:text-red-400 bg-black bg-opacity-60 w-10 h-10 flex items-center justify-center rounded-full">&times;</button>
+      <img id="modalImage" src="" alt="Zoom" class="mx-auto max-w-sm max-h-[60vh] object-contain rounded-lg shadow-lg">
     </div>
   </div>
 
   <script>
-    fetch("../assets/menupremium.json")
-      .then(response => response.json())
-      .then(data => {
-        const container = document.getElementById("premiumMenu");
-        data.forEach(item => {
-          const a = document.createElement("a");
-          a.href = item.link;
-          a.className = "block rounded-xl shadow-lg p-6 text-center text-white font-semibold transform transition duration-300 hover:scale-105";
-          a.style.background = item.color;
-          a.innerHTML = `<h2 class="text-xl">${item.name}</h2>`;
-          container.appendChild(a);
+    let allProducts = {};
+
+    // Load product catalog from JSON
+    async function loadProducts() {
+      try {
+        const response = await fetch('../assets/premium.json'); // ambil data dari assets
+        allProducts = await response.json();
+
+        // bikin tombol kategori
+        const menu = document.getElementById('category-menu');
+        Object.keys(allProducts).forEach((category, idx) => {
+          const btn = document.createElement('button');
+          btn.textContent = category;
+          btn.className = "px-4 py-2 rounded-full shadow text-white transition " +
+                          (idx === 0 ? "bg-pink-500 hover:bg-pink-600" : "bg-gray-400 hover:bg-gray-500");
+          btn.onclick = () => showCategory(category, btn);
+          menu.appendChild(btn);
         });
-      })
-      .catch(err => console.error("Gagal load JSON:", err));
+
+        // default tampil kategori pertama
+        const firstCategory = Object.keys(allProducts)[0];
+        if (firstCategory) {
+          showCategory(firstCategory, menu.firstChild);
+        }
+
+      } catch (err) {
+        console.error("Failed to load premium products:", err);
+      }
+    }
+
+    // render produk by kategori
+    function showCategory(category, btnElement) {
+      // reset tombol warna
+      document.querySelectorAll("#category-menu button").forEach(b => {
+        b.className = "px-4 py-2 rounded-full shadow text-white transition bg-gray-400 hover:bg-gray-500";
+      });
+      btnElement.className = "px-4 py-2 rounded-full shadow text-white transition bg-pink-500 hover:bg-pink-600";
+
+      const container = document.getElementById('product-container');
+      container.innerHTML = '';
+
+      allProducts[category].forEach(product => {
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-xl shadow p-4";
+
+        // Images section
+        const imgWrapper = document.createElement('div');
+        imgWrapper.className = "flex gap-2 overflow-x-auto";
+        product.images.forEach(src => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = product.name;
+          img.className = "w-24 h-24 object-cover rounded cursor-pointer";
+          img.onclick = () => openModal(src);
+          imgWrapper.appendChild(img);
+        });
+
+        // Title
+        const title = document.createElement('h2');
+        title.className = "text-xl font-semibold mt-4";
+        title.textContent = product.name;
+
+        // Description
+        const desc = document.createElement('p');
+        desc.className = "text-sm text-gray-600";
+        desc.textContent = product.description;
+
+        // Price
+        const price = document.createElement('p');
+        price.className = "font-bold mt-2";
+        price.textContent = product.price;
+
+        // WhatsApp button
+const btn = document.createElement('a');
+btn.className = "mt-3 inline-flex items-center px-4 py-2 rounded-lg shadow transition";
+
+if(product.status && product.status.toLowerCase() === "available") {
+    btn.href = product.whatsapp;
+    btn.target = "_blank";
+    btn.classList.add("bg-green-500","text-white","hover:bg-green-600");
+    btn.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="w-5 h-5 mr-2">Pesan sekarang`;
+} else {
+    btn.removeAttribute("href");
+    btn.classList.add("bg-gray-400","text-white","cursor-not-allowed");
+    btn.innerHTML = "Segera Hadir";
+}
+
+
+        // Build card
+        card.appendChild(imgWrapper);
+        card.appendChild(title);
+        card.appendChild(desc);
+        card.appendChild(price);
+        card.appendChild(btn);
+
+        container.appendChild(card);
+      });
+    }
+
+    // Modal functions
+    function openModal(src) {
+      document.getElementById('modalImage').src = src;
+      const modal = document.getElementById('imageModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.getElementById('modalImage').src = '';
+    }
+
+    function closeModalOutside(event) {
+      const modalContent = document.getElementById('modalContent');
+      if (!modalContent.contains(event.target)) {
+        closeModal();
+      }
+    }
+
+    loadProducts();
   </script>
 </body>
 </html>
