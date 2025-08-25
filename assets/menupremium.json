@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Minuman",
+    "link": "minuman.html",
+    "color": "linear-gradient(135deg, #FFB6B9, #FFDE7D)"
+  },
+  {
+    "name": "Kue Kering",
+    "link": "kuekering.html",
+    "color": "linear-gradient(135deg, #A8E6CF, #FFD3B6)"
+  },
+  {
+    "name": "Brownies",
+    "link": "brownies.html",
+    "color": "linear-gradient(135deg, #FF8C94, #FDCB82)"
+  }
+]

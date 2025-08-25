@@ -1,22 +1,36 @@
-[
-  {
-    "name": "Almond Cookies Delight",
-    "description": "Cookies renyah dengan taburan almond panggang, cocok untuk teman minum teh atau kopi.\n📦 1 box berisi 10 pcs — pas buat cemilan keluarga.",
-    "price": "Rp 50.000",
-    "images": [
-      "https://worrylesshomebaker.github.io/katalogproduk/assets/images/pickuekering/almond/almond1.jpeg",
-      "https://worrylesshomebaker.github.io/katalogproduk/assets/images/pickuekering/almond/almond2.jpeg"
-    ],
-    "whatsapp": "https://wa.me/6281299884771?text=Halo%2C%20saya%20mau%20pesan%20Almond%20Cookies.%0ANama%20:%20%0AAlamat%20:%20%0AJumlah%20Pesanan%20:"
-  },
-  {
-    "name": "Chia Oat Cookies",
-    "description": "Cookies sehat berbahan oat dan chia seeds, rendah gula tapi tetap lezat.\n📦 1 box berisi 12 pcs — pilihan tepat buat gaya hidup sehat.",
-    "price": "Rp 55.000",
-    "images": [
-      "https://worrylesshomebaker.github.io/katalogproduk/assets/images/pickuekering/chia/chia1.jpeg",
-      "https://worrylesshomebaker.github.io/katalogproduk/assets/images/pickuekering/chia/chia2.jpeg"
-    ],
-    "whatsapp": "https://wa.me/6281299884771?text=Halo%2C%20saya%20mau%20pesan%20Chia%20Oat%20Cookies.%0ANama%20:%20%0AAlamat%20:%20%0AJumlah%20Pesanan%20:"
-  }
-]
+{
+  "Minuman": [
+    {
+      "name": "Kunyit Asem – Segar, Alami, Menyegarkan",
+      "description": "Rasakan perpaduan hangatnya rempah asli kunyit dan segarnya asam Jawa pilihan dalam satu botol. Dibuat dari bahan alami tanpa pengawet, minuman ini bukan hanya menyegarkan, tapi juga baik untuk menjaga stamina dan membantu tubuh tetap bugar.\nDengan cita rasa manis-asam yang pas, Kunyit Asem dari Worry Less siap menemani hari Anda — bikin rileks, segar, dan sehat setiap tegukan.",
+      "price": "Rp 7.000/botol",
+      "images": [
+        "https://worrylesshomebaker.github.io/katalogproduk/assets/images/picpremium/picminuman/kunyit_asem1.jpeg",
+        "https://worrylesshomebaker.github.io/katalogproduk/assets/images/picpremium/picminuman/kunyit_asem2.jpeg"
+      ],
+      "whatsapp": "https://wa.me/6281299883771?text=Halo%20WorryLess%2C%20saya%20mau%20pesan%20Kunyit%20Asem"
+    }
+  ],
+  "Kue Kering": [
+    {
+      "name": "TBD (Coming Soon)",
+      "description": "Segera hadir dengan varian kue kering premium kami yang lezat dan eksklusif!",
+      "price": "Rp 0",
+      "images": [
+        "https://worrylesshomebaker.github.io/katalogproduk/assets/images/comingsoon.jpg"
+      ],
+      "whatsapp": "https://wa.me/6281299883771?text=Halo%20WorryLess%2C%20saya%20mau%20pesan%20Choco%20Chip%20Cookies"
+    }
+  ],
+  "Brownies": [
+    {
+      "name": "TBD (Coming Soon)",
+      "description": "Segera hadir dengan varian kue kering premium kami yang lezat dan eksklusif!",
+      "price": "Rp 0",
+      "images": [
+        "https://worrylesshomebaker.github.io/katalogproduk/assets/images/comingsoon.jpg"
+      ],
+      "whatsapp": "https://wa.me/6281299883771?text=Halo%20WorryLess%2C%20saya%20mau%20pesan%20Brownies%20Premium"
+    }
+  ]
+}

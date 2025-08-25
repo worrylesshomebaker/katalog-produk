@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Katalog Kue Kering Premium</title>
+  <link rel="icon" href="https://worrylesshomebaker.github.io/katalogproduk/assets/logo/icon.png" type="image/png" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-green-50 text-gray-800 font-sans">
+  <a href="index.html" class="fixed top-4 left-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg z-50 transition duration-300">
+    ⬅ Back
+  </a>
+
+  <div class="max-w-4xl mx-auto pt-32 md:pt-10 px-6">
+    <h1 class="text-3xl font-bold mb-6">Katalog Kue Kering Premium</h1>
+    <div id="product-list" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+
+    <div class="mt-10 text-center">
+      <a href="../" class="text-green-600 hover:underline">Kembali ke Beranda</a>
+    </div>
+  </div>
+
+  <script>
+    async function loadProducts() {
+      try {
+        const response = await fetch('../assets/premium.json');
+        const data = await response.json();
+        const products = data["Kue Kering"];
+        const container = document.getElementById('product-list');
+        container.innerHTML = '';
+
+        products.forEach(p => {
+          const card = document.createElement('div');
+          card.className = "bg-white rounded-xl shadow p-4 flex flex-col";
+
+          const img = document.createElement('img');
+          img.src = p.images[0];
+          img.alt = p.name;
+          img.className = "rounded mb-4";
+
+          const name = document.createElement('h2');
+          name.className = "text-xl font-semibold";
+          name.textContent = p.name;
+
+          const desc = document.createElement('p');
+          desc.className = "text-sm text-gray-600";
+          desc.textContent = p.description;
+
+          const price = document.createElement('p');
+          price.className = "font-bold mt-2";
+          price.textContent = p.price;
+
+          // tombol WA
+          const waBtn = document.createElement('a');
+          waBtn.href = p.whatsapp;
+          waBtn.target = "_blank";
+          // waBtn.className = "mt-4 inline-block bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg text-center transition";
+          // waBtn.textContent = "Pesan via WhatsApp";
+
+          // masukin ke card
+          card.appendChild(img);
+          card.appendChild(name);
+          card.appendChild(desc);
+          card.appendChild(price);
+          card.appendChild(waBtn);
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error("Error loading products:", err);
+      }
+    }
+
+    loadProducts();
+  </script>
+</body>
+</html>
