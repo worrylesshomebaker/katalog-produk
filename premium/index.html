@@ -8,30 +8,112 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-green-50 text-gray-800 font-sans">
+
+  <!-- Back button -->
   <a href="../" class="fixed top-4 left-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg z-50 transition duration-300">
     ⬅ Back
-    </a>
-    <div class="max-w-4xl mx-auto pt-32 md:pt-10 px-6">
-    <h1 class="text-3xl font-bold mb-6">TBD</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Produk 1 -->
-      <!-- <div class="bg-white rounded-xl shadow p-4"> -->
-        <!-- <img src="https://via.placeholder.com/300x200?text=Almond+Cookies" alt="Almond Cookies" class="rounded mb-4"> -->
-        <!-- <h2 class="text-xl font-semibold">Almond Cookies</h2> -->
-        <!-- <p class="text-sm text-gray-600">Tanpa gluten, rendah gula</p> -->
-        <!-- <p class="font-bold mt-2">Rp 75.000</p> -->
-      <!-- </div> -->
-      <!-- Produk 2 -->
-      <!-- <div class="bg-white rounded-xl shadow p-4">
-        <img src="https://via.placeholder.com/300x200?text=Chia+Oat+Cookies" alt="Chia Oat Cookies" class="rounded mb-4">
-        <h2 class="text-xl font-semibold">Chia Oat Cookies</h2>
-        <p class="text-sm text-gray-600">Tanpa gluten, rendah gula</p>
-        <p class="font-bold mt-2">Rp 70.000</p>
-      </div> -->
-    </div>
+  </a>
+
+  <div class="max-w-4xl mx-auto pt-32 md:pt-10 px-6">
+    <h1 class="text-3xl font-bold mb-6">Katalog Kue Kering</h1>
+    <div id="product-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+
     <div class="mt-10 text-center">
       <a href="../" class="text-green-600 hover:underline">Kembali ke Beranda</a>
     </div>
   </div>
+
+  <!-- Modal Zoom -->
+  <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50 cursor-pointer" onclick="closeModalOutside(event)">
+    <div class="relative" id="modalContent">
+      <button onclick="closeModal()" class="absolute top-2 right-2 text-white text-3xl font-bold hover:text-red-400 bg-black bg-opacity-60 w-10 h-10 flex items-center justify-center rounded-full">&times;</button>
+      <img id="modalImage" src="" alt="Zoom" class="mx-auto max-w-sm max-h-[60vh] object-contain rounded-lg shadow-lg">
+    </div>
+  </div>
+
+  <script>
+    // Load product catalog from JSON
+    async function loadProducts() {
+      try {
+        // const response = await fetch('../assets/premium.json');
+        const products = await response.json();
+        const container = document.getElementById('product-container');
+
+        products.forEach(product => {
+          const card = document.createElement('div');
+          card.className = "bg-white rounded-xl shadow p-4";
+
+          // Images section
+          const imgWrapper = document.createElement('div');
+          imgWrapper.className = "flex gap-2 overflow-x-auto";
+          product.images.forEach(src => {
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = product.name;
+            img.className = "w-24 h-24 object-cover rounded cursor-pointer";
+            img.onclick = () => openModal(src);
+            imgWrapper.appendChild(img);
+          });
+
+          // Title
+          const title = document.createElement('h2');
+          title.className = "text-xl font-semibold mt-4";
+          title.textContent = product.name;
+
+          // Description
+          const desc = document.createElement('p');
+          desc.className = "text-sm text-gray-600";
+          desc.textContent = product.description;
+
+          // Price
+          const price = document.createElement('p');
+          price.className = "font-bold mt-2";
+          price.textContent = product.price;
+
+          // WhatsApp button
+          const btn = document.createElement('a');
+          btn.href = product.whatsapp;
+          btn.target = "_blank";
+          btn.className = "mt-3 inline-flex items-center px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition";
+          btn.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="w-5 h-5 mr-2">Pesan sekarang`;
+
+          // Build card
+          card.appendChild(imgWrapper);
+          card.appendChild(title);
+          card.appendChild(desc);
+          card.appendChild(price);
+          card.appendChild(btn);
+
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error("Failed to load products:", err);
+      }
+    }
+
+    // Modal functions
+    function openModal(src) {
+      document.getElementById('modalImage').src = src;
+      const modal = document.getElementById('imageModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.getElementById('modalImage').src = '';
+    }
+
+    function closeModalOutside(event) {
+      const modalContent = document.getElementById('modalContent');
+      if (!modalContent.contains(event.target)) {
+        closeModal();
+      }
+    }
+
+    loadProducts();
+  </script>
 </body>
 </html>
