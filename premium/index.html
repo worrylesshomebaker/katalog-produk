@@ -42,10 +42,10 @@
     // Load product catalog from JSON
     async function loadProducts() {
       try {
-        const response = await fetch('../assets/premium.json'); // ambil data dari assets
+        const response = await fetch('../assets/premium.json'); // get data from assets
         allProducts = await response.json();
 
-        // bikin tombol kategori
+        // category button
         const menu = document.getElementById('category-menu');
         Object.keys(allProducts).forEach((category, idx) => {
           const btn = document.createElement('button');
