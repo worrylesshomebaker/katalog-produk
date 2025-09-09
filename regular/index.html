@@ -30,8 +30,21 @@
       <button onclick="closeModal()" class="absolute top-2 right-2 text-white text-3xl font-bold hover:text-red-400 bg-black bg-opacity-60 w-10 h-10 flex items-center justify-center rounded-full">&times;</button>
       <img id="modalImage" src="" alt="Zoom" class="mx-auto max-w-sm max-h-[60vh] object-contain rounded-lg shadow-lg">
   <!-- Nav buttons -->
-      <button id="prevBtn" onclick="changeImage(-1)" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-4xl font-bold bg-black bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center hover:bg-opacity-80">&lt;</button>
-      <button id="nextBtn" onclick="changeImage(1)" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-4xl font-bold bg-black bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center hover:bg-opacity-80">&gt;</button>
+    <!-- Prev -->
+    <button id="prevBtn" onclick="changeImage(-1)" 
+      class="absolute left-2 md:left-6 top-1/2 transform -translate-y-1/2 
+            bg-black/40 hover:bg-black/60 text-white rounded-full 
+            p-3 md:p-4 transition shadow-lg">
+      &#10094;
+    </button>
+
+    <!-- Next -->
+    <button id="nextBtn" onclick="changeImage(1)" 
+      class="absolute right-2 md:right-6 top-1/2 transform -translate-y-1/2 
+            bg-black/40 hover:bg-black/60 text-white rounded-full 
+            p-3 md:p-4 transition shadow-lg">
+      &#10095;
+    </button>
     </div>
   </div>
 
@@ -110,10 +123,35 @@
 
       function changeImage(step) {
         if (!currentImages.length) return;
-        currentIndex = (currentIndex + step + currentImages.length) % currentImages.length;
-        document.getElementById('modalImage').src = currentImages[currentIndex];
+        const img = document.getElementById('modalImage');
+        img.classList.add("opacity-0", "transition", "duration-300");
+
+        setTimeout(() => {
+          currentIndex = (currentIndex + step + currentImages.length) % currentImages.length;
+          img.src = currentImages[currentIndex];
+          img.onload = () => {
+            img.classList.remove("opacity-0");
+          };
+        }, 300);
       }
 
+      let startX = 0;
+      document.getElementById('modalContent').addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+      });
+
+      document.getElementById('modalContent').addEventListener('touchend', (e) => {
+        let endX = e.changedTouches[0].clientX;
+        let diff = endX - startX;
+
+        if (Math.abs(diff) > 50) { // minimal jarak swipe biar ga ke-detect salah
+          if (diff > 0) {
+            changeImage(-1); // swipe kanan → prev
+          } else {
+            changeImage(1);  // swipe kiri → next
+          }
+        }
+      });
       function closeModal() {
         const modal = document.getElementById('imageModal');
         modal.classList.add('hidden');
