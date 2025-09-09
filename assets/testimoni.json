@@ -1,0 +1,21 @@
+{
+  "Testimoni": [
+    {
+      "name": "Our testimonial",
+      "description": "Setiap produk Worry Less dibuat segar setiap hari, dengan bahan pilihan dan rasa yang selalu bikin balik lagi.\nInilah kata mereka yang sudah mencoba buatan kami",
+      "images": [
+        "https://worrylesshomebaker.github.io/katalog-produk/assets/images/testimoni/Testi-bolen.jpeg",
+        "https://worrylesshomebaker.github.io/katalog-produk/assets/images/testimoni/Testi-bolen2.jpeg",
+        "https://worrylesshomebaker.github.io/katalog-produk/assets/images/testimoni/Testi-bolen3.jpeg",
+        "https://worrylesshomebaker.github.io/katalog-produk/assets/images/testimoni/Testi-Worryless1.jpeg",
+        "https://worrylesshomebaker.github.io/katalog-produk/assets/images/testimoni/Testi-Worryless2.jpeg",
+        "https://worrylesshomebaker.github.io/katalog-produk/assets/images/testimoni/Testi-Worryless3.jpeg",
+        "https://worrylesshomebaker.github.io/katalog-produk/assets/images/testimoni/Testi-Worryless4.jpeg",
+        "https://worrylesshomebaker.github.io/katalog-produk/assets/images/testimoni/Testi-Worryless5.jpeg",
+        "https://worrylesshomebaker.github.io/katalog-produk/assets/images/testimoni/Testi-Worryless6.jpeg"
+      ],
+      "whatsapp": "https://wa.me/6281299884771?text=Halo%20WorryLess%2C%20saya%20mau%20pesan%20Kunyit%20Asem",
+      "status": "tbd"
+    }
+  ]
+}

@@ -19,5 +19,12 @@
     "bgColor": "bg-pink-300",
     "hoverColor": "hover:bg-pink-400",
     "textColor": "text-white"
+  },
+  {
+    "name": "Our Testimoni",
+    "link": "testimoni/",
+    "bgColor": "bg-blue-300",
+    "hoverColor": "hover:bg-blue-400",
+    "textColor": "text-white"
   }
 ]
