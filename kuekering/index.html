@@ -106,10 +106,10 @@
 
           // WhatsApp button
           const btn = document.createElement('a');
-          btn.href = product.whatsapp;
-          btn.target = "_blank";
+          btn.href = `../order/index.html?product=${encodeURIComponent(product.name)}`;
+          btn.target = "_self";
           btn.className = "mt-3 inline-flex items-center px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition";
-          btn.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="w-5 h-5 mr-2">Pesan sekarang`;
+          btn.innerHTML = `Pesan sekarang`;
 
           // Build card
           card.appendChild(imgWrapper);

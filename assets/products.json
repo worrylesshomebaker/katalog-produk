@@ -1,0 +1,12 @@
+[
+  { "name": "Nastar 350g", "price": 80000 },
+  { "name": "Putri Salju", "price": 70000 },
+  { "name": "Choco Almond", "price": 65000 },
+  { "name": "Kastengel Coklat", "price": 85000 },
+  { "name": "Kunyit Asem – Segar, Alami, Menyegarkan", "price": 7000 },
+  { "name": "Kopi Susu Gula Aren – Nikmat, Kaya Rasa, dan Alami", "price": 15000 },
+  { "name": "Americano – Klasik & Bisa Ditambah Stevia", "price": 10000 },
+  { "name": "Bolen Pisang Cokelat Keju", "price": 4500 },
+  { "name": "Cheese Lovers’ Dream: Savory Kastengel Bites", "price": 45000 },
+  { "name": "Choco-Filled Peanut Bliss: A Bite of Joy!", "price": 35000 }
+]
