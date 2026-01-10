@@ -68,12 +68,6 @@
         <input id="jumlah" type="number" min="1" name="jumlah" required class="w-full p-3 rounded-lg border focus:ring-2 focus:ring-yellow-400" />
       </div>
 
-      <!-- Total harga -->
-      <div>
-        <label class="block font-semibold mb-1">Total Harga (Rp)</label>
-        <input id="totalHarga" type="text" readonly class="w-full p-3 rounded-lg bg-gray-100 border" />
-      </div>
-
       <!-- Metode pengambilan -->
       <div>
         <label class="block font-semibold mb-1">Metode</label>
@@ -87,6 +81,20 @@
       <div id="alamatWrapper" class="hidden">
         <label class="block font-semibold mb-1">Alamat Pengiriman</label>
         <textarea id="alamat" name="alamat" rows="3" class="w-full p-3 rounded-lg border focus:ring-2 focus:ring-yellow-400"></textarea>
+      </div>
+
+      <!-- Biaya Packing (hidden by default) -->
+      <div id="packingWrapper" class="hidden">
+        <label class="block font-semibold mb-1">Biaya Packing (Rp)</label>
+        <input id="biayaPacking" type="text" readonly
+              class="w-full p-3 rounded-lg bg-gray-100 border"
+              value="5000" />
+      </div>
+
+      <!-- Total harga -->
+      <div>
+        <label class="block font-semibold mb-1">Total Harga (Rp)</label>
+        <input id="totalHarga" type="text" readonly class="w-full p-3 rounded-lg bg-gray-100 border" />
       </div>
 
 <button id="submitBtn" class="relative w-full bg-yellow-500 hover:bg-yellow-600 py-3 rounded-lg font-semibold text-white flex items-center justify-center">
@@ -107,6 +115,7 @@
   </div>
 
   <script>
+  const PACKING_FEE = 5000;
   const scriptURL = "https://script.google.com/macros/s/AKfycbzzH2SUKN8x2gFRTZHNF1u4RqBHYgV1fkbNuc0Rb-crscVuBNiJ7OL52E33QKkwSCU/exec";
 
   let productData = [];
@@ -148,34 +157,48 @@
   function updateHarga() {
     const produk = document.getElementById("produkSelect").value;
     const jumlah = Number(document.getElementById("jumlah").value) || 0;
+    const metode = document.querySelector("input[name='metode']:checked").value;
 
     const found = productData.find(p => p.name === produk);
     const harga = found ? found.price : 0;
 
+    let total = harga * jumlah;
+
+    // kalau dikirim → tambah biaya packing
+    if (metode === "dikirim") {
+      total += PACKING_FEE;
+    }
+
     document.getElementById("hargaSatuan").value = harga;
-    document.getElementById("totalHarga").value = harga * jumlah;
+    document.getElementById("totalHarga").value = total;
   }
 
   document.getElementById("produkSelect").addEventListener("change", updateHarga);
   document.getElementById("jumlah").addEventListener("input", updateHarga);
-
-  // Show/hide alamat
+  
   const metodeRadios = document.querySelectorAll("input[name='metode']");
+  // Show/hide alamat
   metodeRadios.forEach(radio => {
     radio.addEventListener("change", () => {
-      const wrapper = document.getElementById("alamatWrapper");
+      const alamatWrapper = document.getElementById("alamatWrapper");
       const alamat = document.getElementById("alamat");
+      const packingWrapper = document.getElementById("packingWrapper");
 
       if (radio.value === "dikirim") {
-        wrapper.classList.remove("hidden");
+        alamatWrapper.classList.remove("hidden");
+        packingWrapper.classList.remove("hidden");
         alamat.required = true;
       } else {
-        wrapper.classList.add("hidden");
+        alamatWrapper.classList.add("hidden");
+        packingWrapper.classList.add("hidden");
         alamat.required = false;
         alamat.value = "";
       }
+
+      updateHarga(); // penting biar total langsung berubah
     });
   });
+
 
   // Submit
   document.getElementById('orderForm').addEventListener('submit', async function(e) {
@@ -197,6 +220,7 @@
     const totalHarga = Number(document.getElementById("totalHarga").value);
     const alamat = document.getElementById("alamat").value || "";
     const metode = document.querySelector("input[name='metode']:checked").value;
+    const biayaPacking = metode === "dikirim" ? PACKING_FEE : 0;
 
     try {
       await fetch(scriptURL, {
@@ -207,6 +231,7 @@
           produk,
           jumlah,
           harga: Number(hargaSatuan),
+          biaya_packing: biayaPacking,
           total: Number(totalHarga),
           metode,
           alamat
@@ -214,7 +239,7 @@
       });
 
       document.getElementById('output').classList.remove('hidden');
-      document.getElementById('output').textContent = "Terima kasih atas pesanan Anda!";
+      document.getElementById('output').textContent = "Terima kasih atas pesanan Anda! Silakan konfirmasi melalui WhatsApp jika sudah melakukan pembayaran.";
       document.getElementById('output').scrollIntoView({ behavior: "smooth" });
 
       e.target.reset();
