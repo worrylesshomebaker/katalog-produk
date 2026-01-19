@@ -1,0 +1,15 @@
+[
+  { "name": "Nastar Signature B(Toples Bulat 500gr)", "price": 85000 },
+  { "name": "Nastar Signature M(Toples Tabung 650ml)", "price": 75000 },
+  { "name": "Kastengel B(Toples Bulat 500gr)", "price": 85000 },
+  { "name": "Kastengel M(Toples Tabung 650ml)", "price": 75000 },
+  { "name": "Putri Salju B(Toples Bulat 500gr)", "price": 80000 },
+  { "name": "Putri Salju M(Toples Tabung 650ml)", "price": 70000 },
+  { "name": "Cheesy Choco B(Toples Bulat 500gr)", "price": 85000 },
+  { "name": "Cheesy Choco M(Toples Tabung 650ml)", "price": 75000 },
+  { "name": "Kacang Jadoel B(Toples Bulat 500gr)", "price": 55000 },
+  { "name": "Palm Cheese B(Toples Bulat 500gr)", "price": 75000 },
+  { "name": "Palm Cheese M(Toples Tabung 650ml)", "price": 65000 },
+  { "name": "Garlic Cheese B(Toples Bulat 500gr)", "price": 75000 },
+  { "name": "Garlic Cheese M(Toples Tabung 650ml)", "price": 65000 }
+]

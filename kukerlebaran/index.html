@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form Pemesanan | Worry Less</title>
+<link rel="shortcut icon" href="https://worrylesshomebaker.github.io/katalog-produk/assets/logo/iconworryless.ico" type="image/x-icon" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+  .spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #f59e0b; /* kuning */
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    animation: spin 0.9s linear infinite;
+    margin: auto;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+</head>
+  <a href="../" class="fixed top-4 left-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg z-50 transition duration-300">
+    Home
+  </a>
+<body class="bg-yellow-50 text-gray-800 font-sans">
+  <div class="max-w-xl mx-auto p-6 mt-10 bg-white rounded-xl shadow-md">
+    <!-- Logo -->
+    <div class="mb-6">
+      <img src="https://worrylesshomebaker.github.io/katalog-produk/assets/logo/logo_worryless.jpeg" 
+           alt="Logo Worryless" 
+           class="mx-auto h-24 w-auto rounded-xl shadow-md" />
+    </div>
+    <h1 class="text-3xl font-bold mb-6 text-center">Form Pemesanan</h1>
+
+    <form id="orderForm" class="space-y-4">
+
+      <!-- Nama -->
+      <div>
+        <label class="block font-semibold mb-1">Nama Lengkap</label>
+        <input type="text" name="nama" required class="w-full p-3 rounded-lg border focus:ring-2 focus:ring-yellow-400" />
+      </div>
+
+      <!-- WA -->
+      <div>
+        <label class="block font-semibold mb-1">Nomor WhatsApp</label>
+        <input type="text" name="wa" required class="w-full p-3 rounded-lg border focus:ring-2 focus:ring-yellow-400" placeholder="0812xxxxxxx" />
+      </div>
+
+      <!-- Produk -->
+      <div>
+        <label class="block font-semibold mb-1">Produk</label>
+        <select id="produkSelect" name="produk" class="w-full p-3 rounded-lg border focus:ring-2 focus:ring-yellow-400"></select>
+      </div>
+
+      <!-- Harga satuan -->
+      <div>
+        <label class="block font-semibold mb-1">Harga Satuan (Rp)</label>
+        <input id="hargaSatuan" type="text" readonly class="w-full p-3 rounded-lg bg-gray-100 border" />
+      </div>
+
+      <!-- Jumlah pesanan -->
+      <div>
+        <label class="block font-semibold mb-1">Jumlah Pesanan</label>
+        <input id="jumlah" type="number" min="1" name="jumlah" required class="w-full p-3 rounded-lg border focus:ring-2 focus:ring-yellow-400" />
+      </div>
+
+      <!-- Metode pengambilan -->
+      <div>
+        <label class="block font-semibold mb-1">Metode</label>
+        <div class="flex space-x-4">
+          <label><input type="radio" name="metode" value="diambil" required checked> Diambil</label>
+          <label><input type="radio" name="metode" value="dikirim" required> Dikirim</label>
+        </div>
+      </div>
+
+      <!-- Alamat (hidden by default) -->
+      <div id="alamatWrapper" class="hidden">
+        <label class="block font-semibold mb-1">Alamat Pengiriman</label>
+        <textarea id="alamat" name="alamat" rows="3" class="w-full p-3 rounded-lg border focus:ring-2 focus:ring-yellow-400"></textarea>
+      </div>
+
+      <!-- Biaya Packing (hidden by default) -->
+      <div id="packingWrapper" class="hidden">
+        <label class="block font-semibold mb-1">Biaya Packing (Rp)</label>
+        <input id="biayaPacking" type="text" readonly
+              class="w-full p-3 rounded-lg bg-gray-100 border"
+              value="5000" />
+      </div>
+
+      <!-- Total harga -->
+      <div>
+        <label class="block font-semibold mb-1">Total Harga (Rp)</label>
+        <input id="totalHarga" type="text" readonly class="w-full p-3 rounded-lg bg-gray-100 border" />
+      </div>
+
+<button id="submitBtn" class="relative w-full bg-yellow-500 hover:bg-yellow-600 py-3 rounded-lg font-semibold text-white flex items-center justify-center">
+    <span id="submitText">Kirim Pesanan</span>
+    <svg id="loader" class="hidden animate-spin ml-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor"
+            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z">
+        </path>
+    </svg>
+</button>
+
+    </form>
+
+    <p id="output" class="mt-4 text-center font-semibold text-green-600 hidden">
+      Pesanan berhasil dikirim!
+    </p>
+  </div>
+
+  <script>
+  const PACKING_FEE = 5000;
+  const scriptURL = "https://script.google.com/macros/s/AKfycbzzH2SUKN8x2gFRTZHNF1u4RqBHYgV1fkbNuc0Rb-crscVuBNiJ7OL52E33QKkwSCU/exec";
+
+  let productData = [];
+
+  // Load JSON Produk
+  fetch("../assets/kukerlebaran.json")
+    .then(res => res.json())
+    .then(data => {
+      productData = data;
+      const select = document.getElementById("produkSelect");
+
+      // --- Ambil query param dan decode ---
+      const params = new URLSearchParams(window.location.search);
+      const preselectRaw = params.get("product");
+      const preselect = preselectRaw ? decodeURIComponent(preselectRaw) : "";
+
+      console.log("Param product =", preselect);
+
+      // Isi dropdown
+      data.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item.name;               // penting! harus sama persis
+        option.textContent = `${item.name} - Rp${item.price.toLocaleString()}`;
+        select.appendChild(option);
+      });
+
+      // --- Auto pilih produk kalau ada query param ---
+      if (preselect) {
+        const found = data.find(p => p.name.toLowerCase() === preselect.toLowerCase());
+        if (found) {
+          select.value = found.name;
+        }
+      }
+
+      updateHarga();
+    });
+
+  // Update harga satuan & total
+  function updateHarga() {
+    const produk = document.getElementById("produkSelect").value;
+    const jumlah = Number(document.getElementById("jumlah").value) || 0;
+    const metode = document.querySelector("input[name='metode']:checked").value;
+
+    const found = productData.find(p => p.name === produk);
+    const harga = found ? found.price : 0;
+
+    let total = harga * jumlah;
+
+    // kalau dikirim → tambah biaya packing
+    if (metode === "dikirim") {
+      total += PACKING_FEE;
+    }
+
+    document.getElementById("hargaSatuan").value = harga;
+    document.getElementById("totalHarga").value = total;
+  }
+
+  document.getElementById("produkSelect").addEventListener("change", updateHarga);
+  document.getElementById("jumlah").addEventListener("input", updateHarga);
+  
+  const metodeRadios = document.querySelectorAll("input[name='metode']");
+  // Show/hide alamat
+  metodeRadios.forEach(radio => {
+    radio.addEventListener("change", () => {
+      const alamatWrapper = document.getElementById("alamatWrapper");
+      const alamat = document.getElementById("alamat");
+      const packingWrapper = document.getElementById("packingWrapper");
+
+      if (radio.value === "dikirim") {
+        alamatWrapper.classList.remove("hidden");
+        packingWrapper.classList.remove("hidden");
+        alamat.required = true;
+      } else {
+        alamatWrapper.classList.add("hidden");
+        packingWrapper.classList.add("hidden");
+        alamat.required = false;
+        alamat.value = "";
+      }
+
+      updateHarga(); // penting biar total langsung berubah
+    });
+  });
+
+
+  // Submit
+  document.getElementById('orderForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const submitBtn = document.getElementById("submitBtn");
+    const submitText = document.getElementById("submitText");
+    const loader = document.getElementById("loader");
+
+    submitBtn.disabled = true;
+    submitText.classList.add("invisible");
+    loader.classList.remove("hidden");
+
+    const nama = e.target.nama.value;
+    const wa = "'" + e.target.wa.value;
+    const produk = document.getElementById("produkSelect").value;
+    const jumlah = Number(document.getElementById("jumlah").value);
+    const hargaSatuan = Number(
+    document.getElementById("hargaSatuan").value.replace(/\D/g, ""));
+    const totalHarga = Number(
+    document.getElementById("totalHarga").value.replace(/\D/g, ""));
+    const alamat = document.getElementById("alamat").value || "";
+    const metode = document.querySelector("input[name='metode']:checked").value;
+    const biayaPacking = metode === "dikirim" ? PACKING_FEE : 0;
+
+    try {
+      await fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify({
+          nama,
+          wa: String(wa),
+          produk,
+          jumlah,
+          harga: Number(hargaSatuan),
+          // biaya_packing: biayaPacking,
+          total: Number(totalHarga),
+          metode,
+          alamat
+        })
+      });
+
+      document.getElementById('output').classList.remove('hidden');
+      document.getElementById('output').textContent = "Terima kasih atas pesanan Anda! Silakan konfirmasi melalui WhatsApp jika sudah melakukan pembayaran.";
+      document.getElementById('output').scrollIntoView({ behavior: "smooth" });
+
+      e.target.reset();
+      updateHarga();
+      document.getElementById("alamatWrapper").classList.add("hidden");
+
+    } catch (err) {
+      alert("Gagal mengirim pesanan! Coba lagi.");
+    }
+
+    submitBtn.disabled = false;
+    submitText.classList.remove("invisible");
+    loader.classList.add("hidden");
+  });
+</script>
+
+
+</body>
+</html>
