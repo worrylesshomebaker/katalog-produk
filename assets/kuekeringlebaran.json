@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Nastar 350g",
+    "description": "Kue kering nastar klasik dengan isian selai nanas yang manis dan legit. Teksturnya renyah di luar, lembut di dalam—bikin susah berhenti ngemil!\n📦 Cocok untuk parcel, suguhan hari raya, atau camilan harian keluarga.",
+    "price": "Rp 85.000/toples 350g",
+    "images": [
+      "https://worrylesshomebaker.github.io/katalog-produk/assets/images/pickuekering/nastar_klasik1.jpeg",
+      "https://worrylesshomebaker.github.io/katalog-produk/assets/images/pickuekering/nastar_klasik2.jpeg",
+      "https://worrylesshomebaker.github.io/katalog-produk/assets/images/pickuekering/nastar_klasik3.jpeg"
+    ],
+    "whatsapp": "https://wa.me/6281299884771?text=Halo%2C%20saya%20mau%20pesan%20Nastar%20Klasik.%0ANama%20:%20%0AAlamat%20:%20%0AJumlah%20Pesanan%20:"
+  },
+  {
+    "name": "Putri Salju",
+    "description": "Putri Salju klasik dengan taburan gula halus yang melimpah.\n📦 Cocok untuk parcel, suguhan hari raya, atau camilan harian keluarga.",
+    "price": "Rp 70.000/toples 350g",
+    "images": [
+      "https://worrylesshomebaker.github.io/katalog-produk/assets/images/pickuekering/putsal1.jpeg",
+      "https://worrylesshomebaker.github.io/katalog-produk/assets/images/pickuekering/putsal2.jpeg"
+    ],
+    "whatsapp": "https://wa.me/6281299884771?text=Halo%2C%20saya%20mau%20pesan%20Putri%20Salju.%0ANama%20:%20%0AAlamat%20:%20%0AJumlah%20Pesanan%20:"
+  },
+  {
+    "name": "Choco Almond",
+    "description": "Choco Almond: Kue kering almond premium dengan lapisan coklat lezat di atasnya. Kombinasi renyahnya kacang almond dan manisnya coklat menciptakan sensasi rasa yang memanjakan lidah.\n📦 Cocok untuk parcel, suguhan hari raya, atau camilan harian keluarga.",
+    "price": "Rp 65.000/toples 700ml",
+    "images": [
+      "https://worrylesshomebaker.github.io/katalog-produk/assets/images/pickuekering/chocoalmond1.jpeg"
+    ],
+    "whatsapp": "https://wa.me/6281299884771?text=Halo%2C%20saya%20mau%20pesan%20Choco%20Almond.%0ANama%20:%20%0AAlamat%20:%20%0AJumlah%20Pesanan%20:"
+  }
+  ,
+  {
+    "name": "Kastengel Coklat",
+    "description": "Kastengel Coklat: Kue kering kastengel dengan isian coklat di dalamnya. Teksturnya renyah di luar, lembut di dalam—bikin susah berhenti ngemil!\n📦 Cocok untuk parcel, suguhan hari raya, atau camilan harian keluarga.",
+    "price": "Rp 85.000/toples 350g",
+    "images": [
+      "https://worrylesshomebaker.github.io/katalog-produk/assets/images/pickuekering/kastengelcoklat1.jpeg"
+    ],
+    "whatsapp": "https://wa.me/6281299884771?text=Halo%2C%20saya%20mau%20pesan%20Kastengel%20Coklat.%0ANama%20:%20%0AAlamat%20:%20%0AJumlah%20Pesanan%20:"
+  }
+]
