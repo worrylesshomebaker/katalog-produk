@@ -22,7 +22,7 @@
   },
   {
   "name": "Katalog Kue Lebaran",
-  "link": "cataloguekukerlebaran/",
+  "link": "katalogkukerlebaran/",
   "bgColor": "bg-green-700",
   "hoverColor": "hover:bg-green-900",
   "textColor": "text-white"
