@@ -53,20 +53,25 @@
       <!-- Produk -->
       <div>
         <label class="block font-semibold mb-1">Produk</label>
-        <select id="produkSelect" name="produk" class="w-full p-3 rounded-lg border focus:ring-2 focus:ring-yellow-400"></select>
+        <!-- <select id="produkSelect" name="produk" class="w-full p-3 rounded-lg border focus:ring-2 focus:ring-yellow-400"></select> -->
       </div>
 
       <!-- Harga satuan -->
-      <div>
+      <!-- <div>
         <label class="block font-semibold mb-1">Harga Satuan (Rp)</label>
         <input id="hargaSatuan" type="text" readonly class="w-full p-3 rounded-lg bg-gray-100 border" />
+      </div> -->
+      <!-- Produk -->
+      <div>
+        <label class="block font-semibold mb-2">Pilih Produk</label>
+        <div id="produkList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"></div>
       </div>
 
       <!-- Jumlah pesanan -->
-      <div>
+      <!-- <div>
         <label class="block font-semibold mb-1">Jumlah Pesanan</label>
         <input id="jumlah" type="number" min="1" name="jumlah" required class="w-full p-3 rounded-lg border focus:ring-2 focus:ring-yellow-400" />
-      </div>
+      </div> -->
 
       <!-- Metode pengambilan -->
       <div>
@@ -114,149 +119,220 @@
     </p>
   </div>
 
-  <script>
-  const PACKING_FEE = 5000;
-  const scriptURL = "https://script.google.com/macros/s/AKfycbzzH2SUKN8x2gFRTZHNF1u4RqBHYgV1fkbNuc0Rb-crscVuBNiJ7OL52E33QKkwSCU/exec";
+<script>
+const PACKING_FEE = 5000;
+const scriptURL = "https://script.google.com/macros/s/AKfycbzzH2SUKN8x2gFRTZHNF1u4RqBHYgV1fkbNuc0Rb-crscVuBNiJ7OL52E33QKkwSCU/exec";
 
-  let productData = [];
+let productData = [];
 
-  // Load JSON Produk
-  fetch("../assets/kukerlebaran.json")
-    .then(res => res.json())
-    .then(data => {
-      productData = data;
-      const select = document.getElementById("produkSelect");
+/* ===============================
+   LOAD PRODUK (CHECKBOX + QTY)
+================================ */
+fetch("../assets/kukerlebaran.json")
+  .then(res => res.json())
+  .then(data => {
+    productData = data;
+    const container = document.getElementById("produkList");
 
-      // --- Ambil query param dan decode ---
-      const params = new URLSearchParams(window.location.search);
-      const preselectRaw = params.get("product");
-      const preselect = preselectRaw ? decodeURIComponent(preselectRaw) : "";
+    // ambil query param ?product=
+    const params = new URLSearchParams(window.location.search);
+    const preselectRaw = params.get("product");
+    const preselect = preselectRaw ? decodeURIComponent(preselectRaw) : "";
 
-      console.log("Param product =", preselect);
+    data.forEach((item, i) => {
+      const checked =
+        preselect &&
+        item.name.toLowerCase() === preselect.toLowerCase();
 
-      // Isi dropdown
-      data.forEach(item => {
-        const option = document.createElement("option");
-        option.value = item.name;               // penting! harus sama persis
-        option.textContent = `${item.name} - Rp${item.price.toLocaleString()}`;
-        select.appendChild(option);
-      });
+      container.innerHTML += `
+      <div class="border rounded-xl p-4 hover:shadow-md transition">
 
-      // --- Auto pilih produk kalau ada query param ---
-      if (preselect) {
-        const found = data.find(p => p.name.toLowerCase() === preselect.toLowerCase());
-        if (found) {
-          select.value = found.name;
-        }
-      }
+        <!-- Checkbox + Nama -->
+        <label class="flex items-start space-x-2">
+          <input type="checkbox"
+                class="produk-check mt-1 scale-110"
+                data-index="${i}"
+                ${checked ? "checked" : ""}>
 
-      updateHarga();
+          <div>
+            <p class="text-sm font-semibold leading-snug">
+              ${item.name}
+            </p>
+            <p class="text-xs text-gray-500">
+              Rp${item.price.toLocaleString()}
+            </p>
+          </div>
+        </label>
+
+        <!-- Qty -->
+        <div class="mt-3">
+          <input type="number"
+                min="1"
+                max="50"
+                value="1"
+                title="Maksimal 50 pcs per produk"
+                class="produk-qty w-full border rounded-lg p-2 text-center"
+                data-index="${i}"
+                ${checked ? "" : "disabled"}>
+        </div>
+
+      </div>
+    `;
     });
 
-  // Update harga satuan & total
-  function updateHarga() {
-    const produk = document.getElementById("produkSelect").value;
-    const jumlah = Number(document.getElementById("jumlah").value) || 0;
-    const metode = document.querySelector("input[name='metode']:checked").value;
-
-    const found = productData.find(p => p.name === produk);
-    const harga = found ? found.price : 0;
-
-    let total = harga * jumlah;
-
-    // kalau dikirim → tambah biaya packing
-    if (metode === "dikirim") {
-      total += PACKING_FEE;
-    }
-
-    document.getElementById("hargaSatuan").value = harga;
-    document.getElementById("totalHarga").value = total;
-  }
-
-  document.getElementById("produkSelect").addEventListener("change", updateHarga);
-  document.getElementById("jumlah").addEventListener("input", updateHarga);
-  
-  const metodeRadios = document.querySelectorAll("input[name='metode']");
-  // Show/hide alamat
-  metodeRadios.forEach(radio => {
-    radio.addEventListener("change", () => {
-      const alamatWrapper = document.getElementById("alamatWrapper");
-      const alamat = document.getElementById("alamat");
-      const packingWrapper = document.getElementById("packingWrapper");
-
-      if (radio.value === "dikirim") {
-        alamatWrapper.classList.remove("hidden");
-        packingWrapper.classList.remove("hidden");
-        alamat.required = true;
-      } else {
-        alamatWrapper.classList.add("hidden");
-        packingWrapper.classList.add("hidden");
-        alamat.required = false;
-        alamat.value = "";
-      }
-
-      updateHarga(); // penting biar total langsung berubah
-    });
+    updateTotal();
   });
 
+/* ===============================
+   EVENT LISTENER CHECKBOX & QTY
+================================ */
+document.addEventListener("change", e => {
+  // checkbox produk
+  if (e.target.classList.contains("produk-check")) {
+    const idx = e.target.dataset.index;
+    const qty = document.querySelector(`.produk-qty[data-index="${idx}"]`);
+    qty.disabled = !e.target.checked;
+    updateTotal();
+  }
 
-  // Submit
-  document.getElementById('orderForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
+  // qty produk
+  if (e.target.classList.contains("produk-qty")) {
+      if (e.target.value > 50) e.target.value = 50;
+      if (e.target.value < 1) e.target.value = 1;
+    updateTotal();
+  }
+});
 
-    const submitBtn = document.getElementById("submitBtn");
-    const submitText = document.getElementById("submitText");
-    const loader = document.getElementById("loader");
+/* ===============================
+   METODE AMBIL / KIRIM
+================================ */
+document.querySelectorAll("input[name='metode']").forEach(radio => {
+  radio.addEventListener("change", () => {
+    const alamatWrapper = document.getElementById("alamatWrapper");
+    const alamat = document.getElementById("alamat");
+    const packingWrapper = document.getElementById("packingWrapper");
 
-    submitBtn.disabled = true;
-    submitText.classList.add("invisible");
-    loader.classList.remove("hidden");
-
-    const nama = e.target.nama.value;
-    const wa = "'" + e.target.wa.value;
-    const produk = document.getElementById("produkSelect").value;
-    const jumlah = Number(document.getElementById("jumlah").value);
-    const hargaSatuan = Number(
-    document.getElementById("hargaSatuan").value.replace(/\D/g, ""));
-    const totalHarga = Number(
-    document.getElementById("totalHarga").value.replace(/\D/g, ""));
-    const alamat = document.getElementById("alamat").value || "";
-    const metode = document.querySelector("input[name='metode']:checked").value;
-    const biayaPacking = metode === "dikirim" ? PACKING_FEE : 0;
-
-    try {
-      await fetch(scriptURL, {
-        method: "POST",
-        body: JSON.stringify({
-          nama,
-          wa: String(wa),
-          produk,
-          jumlah,
-          harga: Number(hargaSatuan),
-          // biaya_packing: biayaPacking,
-          total: Number(totalHarga),
-          metode,
-          alamat
-        })
-      });
-
-      document.getElementById('output').classList.remove('hidden');
-      document.getElementById('output').textContent = "Terima kasih atas pesanan Anda! Silakan konfirmasi melalui WhatsApp jika sudah melakukan pembayaran.";
-      document.getElementById('output').scrollIntoView({ behavior: "smooth" });
-
-      e.target.reset();
-      updateHarga();
-      document.getElementById("alamatWrapper").classList.add("hidden");
-
-    } catch (err) {
-      alert("Gagal mengirim pesanan! Coba lagi.");
+    if (radio.value === "dikirim") {
+      alamatWrapper.classList.remove("hidden");
+      packingWrapper.classList.remove("hidden");
+      alamat.required = true;
+    } else {
+      alamatWrapper.classList.add("hidden");
+      packingWrapper.classList.add("hidden");
+      alamat.required = false;
+      alamat.value = "";
     }
 
+    updateTotal();
+  });
+});
+
+/* ===============================
+   HITUNG TOTAL
+================================ */
+function updateTotal() {
+  let total = 0;
+
+  document.querySelectorAll(".produk-check:checked").forEach(cb => {
+    const idx = cb.dataset.index;
+    const qty = Number(
+      document.querySelector(`.produk-qty[data-index="${idx}"]`).value
+    );
+    total += productData[idx].price * qty;
+  });
+
+  const metode = document.querySelector("input[name='metode']:checked").value;
+  if (metode === "dikirim") total += PACKING_FEE;
+
+  document.getElementById("totalHarga").value = total;
+}
+
+/* ===============================
+   SUBMIT FORM
+================================ */
+document.getElementById("orderForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const submitBtn = document.getElementById("submitBtn");
+  const submitText = document.getElementById("submitText");
+  const loader = document.getElementById("loader");
+
+  submitBtn.disabled = true;
+  submitText.classList.add("invisible");
+  loader.classList.remove("hidden");
+
+  const nama = e.target.nama.value;
+  const wa = "'" + e.target.wa.value;
+  const metode = document.querySelector("input[name='metode']:checked").value;
+  const alamat = document.getElementById("alamat").value || "";
+  const totalHarga = Number(
+    document.getElementById("totalHarga").value.replace(/\D/g, "")
+  );
+
+  const items = [];
+  let produkText = "";
+
+  document.querySelectorAll(".produk-check:checked").forEach(cb => {
+    const idx = cb.dataset.index;
+    const qty = document.querySelector(`.produk-qty[data-index="${idx}"]`).value;
+    const price = productData[idx].price;
+
+    items.push({
+      name: productData[idx].name,
+      qty,
+      price
+    });
+
+    produkText += `${productData[idx].name} x${qty} (Rp${price.toLocaleString()})\n`;
+  });
+
+  // validasi minimal 1 produk
+  if (items.length === 0) {
+    alert("Pilih minimal 1 produk ya 🙂");
     submitBtn.disabled = false;
     submitText.classList.remove("invisible");
     loader.classList.add("hidden");
-  });
+    return;
+  }
+
+  try {
+    await fetch(scriptURL, {
+      method: "POST",
+      body: JSON.stringify({
+        nama,
+        wa: String(wa),
+        produk: produkText.slice(0, -2),
+        items,
+        total: totalHarga,
+        metode,
+        alamat
+      })
+    });
+
+    document.getElementById('output').classList.remove('hidden');
+    document.getElementById('output').textContent = "Terima kasih atas pesanan Anda! Silakan konfirmasi melalui WhatsApp jika sudah melakukan pembayaran.";
+    document.getElementById('output').scrollIntoView({ behavior: "smooth" });
+
+    e.target.reset();
+    document.querySelectorAll(".produk-check").forEach(cb => cb.checked = false);
+    document.querySelectorAll(".produk-qty").forEach(q => {
+      q.value = 1;
+      q.disabled = true;
+      });
+    updateTotal();
+    // document.getElementById("produkList").innerHTML = "";
+    // location.reload();
+
+  } catch (err) {
+    alert("Gagal mengirim pesanan! Coba lagi.");
+  }
+
+  submitBtn.disabled = false;
+  submitText.classList.remove("invisible");
+  loader.classList.add("hidden");
+});
 </script>
+
 
 
 </body>

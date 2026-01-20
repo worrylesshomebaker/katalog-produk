@@ -5,14 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-site-verification" content="m9cvjolxG_ySNxC7S4Vg3yhvHzGsI8kSR3JevP35W3o">
   <title>Katalog Kue Kering</title>
+
   <link rel="shortcut icon" href="https://worrylesshomebaker.github.io/katalog-produk/assets/logo/iconworryless.ico" type="image/x-icon" />
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-100 text-gray-800 font-sans">
 
-<!-- Back button -->
-<a href="../" class="fixed top-4 left-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg z-50">
-⬅ Back
+<!-- Back Button -->
+<a href="../"
+   class="fixed top-4 left-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg z-50">
+  ⬅ Back
 </a>
 
 <div class="max-w-5xl mx-auto pt-28 pb-16 px-4">
@@ -23,94 +26,135 @@
     <p class="text-gray-600 mt-2">Worry Less • Homemade Cookies</p>
   </div>
 
+  <!-- Products -->
   <div id="product-container" class="space-y-20"></div>
-
 </div>
 
-<!-- Modal Zoom -->
-<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50 cursor-pointer" onclick="closeModalOutside(event)">
-  <div class="relative" id="modalContent">
-    <button onclick="closeModal()" class="absolute top-2 right-2 text-white text-3xl font-bold bg-black/60 w-10 h-10 rounded-full">&times;</button>
-    <img id="modalImage" class="max-w-md max-h-[70vh] rounded-lg shadow-lg">
+<!-- MODAL -->
+<div id="imageModal"
+     class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50">
 
-    <button onclick="changeImage(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 text-white rounded-full p-3">&#10094;</button>
-    <button onclick="changeImage(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/40 text-white rounded-full p-3">&#10095;</button>
+  <div id="modalContent"
+       class="relative cursor-default"
+       onclick="event.stopPropagation()">
+
+    <button id="closeModalBtn"
+            class="absolute top-2 right-2 text-white text-3xl font-bold bg-black/60 w-10 h-10 rounded-full">
+      &times;
+    </button>
+
+    <img id="modalImage"
+         class="max-w-md max-h-[70vh] rounded-lg shadow-lg">
+
+    <button id="prevBtn"
+            class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 text-white rounded-full p-3">
+      &#10094;
+    </button>
+
+    <button id="nextBtn"
+            class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/40 text-white rounded-full p-3">
+      &#10095;
+    </button>
   </div>
 </div>
 
 <script>
+let productsData = [];
+let currentImages = [];
+let currentIndex = 0;
+
+const container = document.getElementById('product-container');
+const modal = document.getElementById('imageModal');
+const modalImage = document.getElementById('modalImage');
+
 async function loadProducts() {
-  const res = await fetch('../assets/kuekering.json');
-  const products = await res.json();
-  const container = document.getElementById('product-container');
+  const res = await fetch('../assets/kuekeringlebaran.json');
+  productsData = await res.json();
 
-  products.forEach(product => {
-
+  productsData.forEach((product, pIdx) => {
     const section = document.createElement('section');
     section.className = "bg-white rounded-2xl shadow-lg overflow-hidden";
 
     section.innerHTML = `
       <div class="grid md:grid-cols-2 gap-8 p-8">
-        
-        <!-- Image -->
+
         <div>
-          <img src="${product.images[0]}" 
-               class="w-full h-80 object-cover rounded-xl cursor-pointer shadow"
-               onclick="openModal('${product.images[0]}', ${JSON.stringify(product.images)}, 0)">
-          
+          <img src="${product.images[0]}"
+               class="main-image w-full h-80 object-cover rounded-xl cursor-pointer shadow"
+               data-product="${pIdx}"
+               data-index="0">
+
           <div class="flex gap-3 mt-4 overflow-x-auto">
-            ${product.images.map((img, idx) => `
-              <img src="${img}" 
-                   class="w-20 h-20 object-cover rounded-lg cursor-pointer border hover:border-yellow-400"
-                   onclick="openModal('${img}', ${JSON.stringify(product.images)}, ${idx})">
+            ${product.images.map((img, i) => `
+              <img src="${img}"
+                   class="thumb-image w-20 h-20 object-cover rounded-lg cursor-pointer border hover:border-yellow-400"
+                   data-product="${pIdx}"
+                   data-index="${i}">
             `).join('')}
           </div>
         </div>
 
-        <!-- Info -->
-        <div class="flex flex-col justify-between">
-          <div>
-            <h2 class="text-3xl font-bold mb-3">${product.name}</h2>
-            <p class="text-gray-600 leading-relaxed">${product.description}</p>
-          </div>
+            <div class="flex flex-col gap-4">
+            <div>
+                <h2 class="text-3xl font-bold mb-3">${product.name}</h2>
+                <p class="text-gray-600 leading-relaxed">${product.description}</p>
+            </div>
 
-          <div class="mt-8">
-            <p class="text-2xl font-extrabold mb-4">${product.price}</p>
-            <!-- <a href="../kukerlebaran/index.html?product=${encodeURIComponent(product.name)}"
-               class="inline-block bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-xl text-lg shadow">
-              Pesan Sekarang
-            </a> -->
-          </div>
-        </div>
+            <div class="flex flex-col gap-1 mt-6">
+                <p class="text-2xl font-extrabold">${product.price1}</p>
+                <p class="text-2xl font-extrabold">${product.price2}</p>
+            </div>
+            </div>
 
       </div>
     `;
 
     container.appendChild(section);
   });
+
+  attachImageEvents();
 }
 
-let currentImages = [];
-let currentIndex = 0;
+function attachImageEvents() {
+  document.querySelectorAll('.main-image, .thumb-image').forEach(img => {
+    img.addEventListener('click', () => {
+      const productIndex = img.dataset.product;
+      const imageIndex = img.dataset.index;
+      openModal(productIndex, imageIndex);
+    });
+  });
+}
 
-function openModal(src, images, index) {
-  currentImages = images;
-  currentIndex = index;
-  document.getElementById('modalImage').src = src;
-  document.getElementById('imageModal').classList.remove('hidden');
-  document.getElementById('imageModal').classList.add('flex');
+function openModal(productIndex, imageIndex) {
+  currentImages = productsData[productIndex].images;
+  currentIndex = Number(imageIndex);
+  modalImage.src = currentImages[currentIndex];
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeModal() {
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
 }
 
 function changeImage(step) {
   currentIndex = (currentIndex + step + currentImages.length) % currentImages.length;
-  document.getElementById('modalImage').src = currentImages[currentIndex];
+  modalImage.src = currentImages[currentIndex];
 }
 
-function closeModal() {
-  document.getElementById('imageModal').classList.add('hidden');
-  document.getElementById('imageModal').classList.remove('flex');
-}
+/* EVENTS */
+document.getElementById('closeModalBtn').onclick = closeModal;
+document.getElementById('prevBtn').onclick = () => changeImage(-1);
+document.getElementById('nextBtn').onclick = () => changeImage(1);
 
+modal.addEventListener('click', closeModal);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+    closeModal();
+  }
+});
 loadProducts();
 </script>
 

@@ -2,8 +2,8 @@
   {
     "name": "Katalog Premium",
     "link": "premium/",
-    "bgColor": "bg-green-500",
-    "hoverColor": "hover:bg-green-600",
+    "bgColor": "bg-red-400",
+    "hoverColor": "hover:bg-red-500",
     "textColor": "text-white"
   },
   {
@@ -19,6 +19,13 @@
     "bgColor": "bg-pink-300",
     "hoverColor": "hover:bg-pink-400",
     "textColor": "text-white"
+  },
+  {
+  "name": "Katalog Kue Lebaran",
+  "link": "cataloguekukerlebaran/",
+  "bgColor": "bg-green-700",
+  "hoverColor": "hover:bg-green-900",
+  "textColor": "text-white"
   },
   {
     "name": "Our Testimoni",
