@@ -21,6 +21,13 @@
     "textColor": "text-white"
   },
   {
+  "name": "Katalog Kue Lebaran",
+  "link": "katalogkukerlebaran/",
+  "bgColor": "bg-green-700",
+  "hoverColor": "hover:bg-green-900",
+  "textColor": "text-white"
+  },
+  {
     "name": "Our Testimoni",
     "link": "testimoni/",
     "bgColor": "bg-blue-300",
